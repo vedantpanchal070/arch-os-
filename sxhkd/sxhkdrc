@@ -1,0 +1,36 @@
+# Terminal (Super + Enter) -> Opens Kitty
+super + Return
+	kitty
+
+# App Launcher (Super + Space) -> Opens Rofi
+super + space
+	rofi -show drun -show-icons
+
+# Browser (Super + W) -> Opens Edge
+super + w
+	microsoft-edge-stable
+
+# File Manager (Super + F) -> Opens Thunar
+super + f
+	thunar
+
+# Screenshot (PrintScreen) -> Opens Flameshot GUI
+Print
+	flameshot gui
+
+# Reload Config (Super + Esc) -> Reloads bspwm without rebooting
+super + Escape
+	pkill -USR1 -x sxhkd
+
+# Close Window (Super + Q)
+super + q
+	bspc node -c
+
+# --- BSPWM Controls (Standard) ---
+# Focus node
+super + {h,j,k,l}
+	bspc node -f {west,south,north,east}
+
+# Move node
+super + shift + {h,j,k,l}
+	bspc node -s {west,south,north,east}
