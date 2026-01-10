@@ -85,15 +85,25 @@ echo "[*] Enabling Services..."
 sudo systemctl enable NetworkManager
 sudo systemctl enable lightdm.service
 
-# 9. Prevent Qtile Crash (Generate Colors)
-echo "[*] Generating default Pywal colors..."
-# We need a default wallpaper to generate colors, or Qtile will crash reading colors.json
-# Using a placeholder color if no wallpaper exists
-if [ -z "$(ls -A ~/Pictures/Wallpapers)" ]; then
-    wal --theme dark
+# 9. Setup Wallpaper & Colors (Automatic)
+echo "[*] Setting up Wallpapers..."
+
+# Copy the wallpaper from your repo to the system folder
+if [ -d "wallpapers" ]; then
+    cp wallpapers/* ~/Pictures/Wallpapers/
+    echo ":: Wallpapers copied."
+fi
+
+# Generate the colors immediately using your default image
+# Change 'default.jpg' to the actual name of your file!
+DEFAULT_WALL="$HOME/Pictures/Wallpapers/default.jpg"
+
+if [ -f "$DEFAULT_WALL" ]; then
+    echo ":: Generating Pywal colors from $DEFAULT_WALL..."
+    wal -i "$DEFAULT_WALL"
 else
-    # Pick first wallpaper found
-    wal -i "$(find ~/Pictures/Wallpapers -type f | head -n 1)"
+    echo ":: WARNING: Default wallpaper not found. Using random fallback."
+    wal --theme dark
 fi
 
 echo "=========================================="
